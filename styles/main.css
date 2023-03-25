@@ -1,0 +1,66 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.main-wrapper {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 100%;
+  border: 1px solid blue;
+  background-color: navy;
+}
+.sidebar-wrapper .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid white;
+  height: 10%;
+  color: white;
+}
+.sidebar-wrapper .title h2 {
+  font-size: 15px;
+}
+
+.body-wrapper {
+  display: flex;
+  justify-content: center;
+  border: 1px solid red;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: lightgray;
+}
+.body-wrapper .name-btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.body-wrapper .name-btn-container p {
+  display: flex;
+  font-size: 60px;
+  color: black;
+}
+.body-wrapper .name-btn-container .name-change-btn-wrapper {
+  display: flex;
+  height: 60px;
+  width: 400px;
+}
+.body-wrapper .name-btn-container .name-change-btn-wrapper button {
+  width: 100%;
+  border-radius: 5px;
+  background-color: navy;
+  color: white;
+  cursor: pointer;
+}/*# sourceMappingURL=main.css.map */
