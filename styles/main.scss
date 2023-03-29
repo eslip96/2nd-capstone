@@ -4,6 +4,7 @@ body {
   height: 100%;
   margin: 0;
 }
+
 .main-wrapper {
   display: flex;
   height: 100%;
@@ -28,6 +29,49 @@ body {
 
     h2 {
       font-size: 15px;
+    }
+  }
+
+  .student-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    color: white;
+
+    .students {
+      font-size: 20px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .weight-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .minus-button,
+      .plus-button {
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        color: navy;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+
+      .minus-button:hover,
+      .plus-button:hover {
+        background-color: lightgray;
+      }
     }
   }
 }
