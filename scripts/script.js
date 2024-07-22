@@ -49,60 +49,59 @@ users: [{}, {}, {}]
 Be on the lookout for further instructions regarding fetching your cohort peers
 -- HAVE FUN --
 */
-const login = { email: "enoka@devpipeline.com", password: "1234" };
-fetch("https://devpipeline-mock-api.onrender.com/api/auth/login", {
-  credentials: "same-origin",
-  method: "post",
-  body: JSON.stringify(login),
-  headers: {
-    "content-type": "application/json",
-  },
-})
+// const login = { email: "enoka@devpipeline.com", password: "1234" };
+fetch("https://fe-students.onrender.com/api/users", {})
   .then((res) => res.json())
   .then((jsondata) => {
-    let data = jsondata["users"];
+    let data = jsondata["results"];
+    [console.log(data)];
+
     const table = document.getElementsByClassName("students");
+
     console.log("TABLE", table);
     const ListOfStudentsDiv = table.item(0);
 
-    let weightedNames = [];
+    if (table.length > 0) {
+      const ListOfStudentsDiv = table.item(0);
+      let weightedNames = [];
 
-    data.forEach((user) => {
-      const firstName = user.first_name;
-      const lastNameInitial = user.last_name.charAt(0);
-      const weight = 1;
-      const name = `${firstName} ${lastNameInitial}`;
-      weightedNames.push({ name, weight });
+      data.forEach((user) => {
+        const Name = user.name;
+        const weight = 1;
+        weightedNames.push({ name, weight });
 
-      const studentWrapper = document.createElement("div");
-      studentWrapper.classList.add("student-wrapper");
+        const studentWrapper = document.createElement("div");
+        studentWrapper.classList.add("student-wrapper");
 
-      const text = document.createTextNode(name + ":");
-      studentWrapper.appendChild(text);
+        const text = document.createTextNode(": ");
+        studentWrapper.appendChild(text);
 
-      const weightElement = document.createElement("span");
-      weightElement.setAttribute("id", `weight${user.id}`);
-      weightElement.innerText = weight;
-      studentWrapper.appendChild(weightElement);
+        const weightElement = document.createElement("span");
+        weightElement.setAttribute("id", `weight${user.id}`);
+        weightElement.innerText = weight;
+        studentWrapper.appendChild(weightElement);
 
-      const newLine = document.createElement("br");
-      studentWrapper.appendChild(newLine);
+        const newLine = document.createElement("br");
+        studentWrapper.appendChild(newLine);
 
-      const plusButton = document.createElement("button");
-      plusButton.classList.add("plus-button");
-      plusButton.innerText = "+";
-      studentWrapper.appendChild(plusButton);
+        const plusButton = document.createElement("button");
+        plusButton.classList.add("plus-button");
+        plusButton.innerText = "+";
+        studentWrapper.appendChild(plusButton);
 
-      const minusButton = document.createElement("button");
-      minusButton.classList.add("minus-button");
-      minusButton.innerText = "-";
-      studentWrapper.appendChild(minusButton);
+        const minusButton = document.createElement("button");
+        minusButton.classList.add("minus-button");
+        minusButton.innerText = "-";
+        studentWrapper.appendChild(minusButton);
 
-      plusButton.addEventListener("click", () => handleClick(plusButton, 1));
-      minusButton.addEventListener("click", () => handleClick(minusButton, -1));
+        plusButton.addEventListener("click", () => handleClick(plusButton, 1));
+        minusButton.addEventListener("click", () =>
+          handleClick(minusButton, -1)
+        );
 
-      ListOfStudentsDiv.appendChild(studentWrapper);
-    });
+        ListOfStudentsDiv.appendChild(studentWrapper);
+      });
+    }
 
     const pickNameButton = document.getElementById("pick-name-button");
     pickNameButton.addEventListener("click", handleButtonClick);
