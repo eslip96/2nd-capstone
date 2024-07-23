@@ -63,4 +63,15 @@ body {
   background-color: navy;
   color: white;
   cursor: pointer;
-}/*# sourceMappingURL=main.css.map */
+}
+
+.students {
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+}
+
+.students > .student-wrapper > .student-name {
+  display: flex;
+  font-size: 18px;
+}

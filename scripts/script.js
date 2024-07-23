@@ -50,36 +50,38 @@ Be on the lookout for further instructions regarding fetching your cohort peers
 -- HAVE FUN --
 */
 // const login = { email: "enoka@devpipeline.com", password: "1234" };
-fetch("https://fe-students.onrender.com/api/users", {})
+fetch("https://fe-students.onrender.com/api/users")
   .then((res) => res.json())
   .then((jsondata) => {
     let data = jsondata["results"];
-    [console.log(data)];
+    console.log(data);
 
     const table = document.getElementsByClassName("students");
 
     console.log("TABLE", table);
-    const ListOfStudentsDiv = table.item(0);
 
     if (table.length > 0) {
       const ListOfStudentsDiv = table.item(0);
       let weightedNames = [];
+      console.log(weightedNames);
 
       data.forEach((user) => {
-        const Name = user.name;
-        const weight = 1;
+        const name = user.name;
+        let weight = 0;
         weightedNames.push({ name, weight });
+        console.log(user);
 
         const studentWrapper = document.createElement("div");
         studentWrapper.classList.add("student-wrapper");
 
-        const text = document.createTextNode(": ");
-        studentWrapper.appendChild(text);
+        const nameContainer = document.createTextNode(`${name}:`);
+        studentWrapper.appendChild(nameContainer);
 
         const weightElement = document.createElement("span");
         weightElement.setAttribute("id", `weight${user.id}`);
         weightElement.innerText = weight;
         studentWrapper.appendChild(weightElement);
+        console.log(studentWrapper);
 
         const newLine = document.createElement("br");
         studentWrapper.appendChild(newLine);
@@ -94,9 +96,11 @@ fetch("https://fe-students.onrender.com/api/users", {})
         minusButton.innerText = "-";
         studentWrapper.appendChild(minusButton);
 
-        plusButton.addEventListener("click", () => handleClick(plusButton, 1));
+        plusButton.addEventListener("click", () =>
+          handleClick(plusButton, 1, user.id)
+        );
         minusButton.addEventListener("click", () =>
-          handleClick(minusButton, -1)
+          handleClick(minusButton, -1, user.id)
         );
 
         ListOfStudentsDiv.appendChild(studentWrapper);
@@ -107,8 +111,7 @@ fetch("https://fe-students.onrender.com/api/users", {})
     pickNameButton.addEventListener("click", handleButtonClick);
 
     function handleClick(button, crement) {
-      const parent = button.parentElement;
-      const weightElement = parent.children[1];
+      const weightElement = document.getElementById(`weight${user.id}`);
       console.log(weightElement);
       const currentWeight = Number(weightElement.textContent);
       console.log(currentWeight);
@@ -136,7 +139,7 @@ fetch("https://fe-students.onrender.com/api/users", {})
         const weight = Number(weightElement.textContent);
         currentWeight += weight;
         if (randomWeight < currentWeight) {
-          const chosenName = user.first_name;
+          const chosenName = user.name;
           const nameContainer = document.querySelector(".name-btn-container p");
           nameContainer.textContent = chosenName;
           break;
