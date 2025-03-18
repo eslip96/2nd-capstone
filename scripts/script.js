@@ -58,18 +58,12 @@ fetch("https://fe-students.onrender.com/api/users")
 
     const table = document.getElementsByClassName("students");
 
-    console.log("TABLE", table);
-
     if (table.length > 0) {
       const ListOfStudentsDiv = table.item(0);
-      let weightedNames = [];
-      console.log(weightedNames);
 
       data.forEach((user) => {
         const name = user.name;
         let weight = 0;
-        weightedNames.push({ name, weight });
-        console.log(user);
 
         const studentWrapper = document.createElement("div");
         studentWrapper.classList.add("student-wrapper");
@@ -81,7 +75,6 @@ fetch("https://fe-students.onrender.com/api/users")
         weightElement.setAttribute("id", `weight${user.id}`);
         weightElement.innerText = weight;
         studentWrapper.appendChild(weightElement);
-        console.log(studentWrapper);
 
         const newLine = document.createElement("br");
         studentWrapper.appendChild(newLine);
@@ -96,12 +89,8 @@ fetch("https://fe-students.onrender.com/api/users")
         minusButton.innerText = "-";
         studentWrapper.appendChild(minusButton);
 
-        plusButton.addEventListener("click", () =>
-          handleClick(plusButton, 1, user.id)
-        );
-        minusButton.addEventListener("click", () =>
-          handleClick(minusButton, -1, user.id)
-        );
+        plusButton.addEventListener("click", () => handleClick(1, user.id));
+        minusButton.addEventListener("click", () => handleClick(-1, user.id));
 
         ListOfStudentsDiv.appendChild(studentWrapper);
       });
@@ -110,40 +99,28 @@ fetch("https://fe-students.onrender.com/api/users")
     const pickNameButton = document.getElementById("pick-name-button");
     pickNameButton.addEventListener("click", handleButtonClick);
 
-    function handleClick(button, crement) {
-      const weightElement = document.getElementById(`weight${user.id}`);
-      console.log(weightElement);
+    function handleClick(crement, userId) {
+      const weightElement = document.getElementById(`weight${userId}`);
       const currentWeight = Number(weightElement.textContent);
-      console.log(currentWeight);
-      if (
-        (crement === 1 && button.classList.contains("plus-button")) ||
-        (crement === -1 && button.classList.contains("minus-button"))
-      ) {
-        weightElement.innerHTML = currentWeight + crement;
-      }
+      weightElement.innerHTML = currentWeight + crement;
     }
 
     function handleButtonClick() {
       let totalWeight = 0;
-      for (const user of data) {
-        const weightElement = document.getElementById(`weight${user.id}`);
-        const weight = Number(weightElement.textContent);
-        totalWeight += weight;
-      }
 
-      const randomWeight = Math.random() * totalWeight;
+      const randomIndex = Math.floor(Math.random() * data.length);
+      const chosenName = data[randomIndex].name;
 
-      let currentWeight = 0;
-      for (const user of data) {
-        const weightElement = document.getElementById(`weight${user.id}`);
-        const weight = Number(weightElement.textContent);
-        currentWeight += weight;
-        if (randomWeight < currentWeight) {
-          const chosenName = user.name;
-          const nameContainer = document.querySelector(".name-btn-container p");
-          nameContainer.textContent = chosenName;
-          break;
-        }
-      }
+      const nameContainer = document.querySelector(".name-btn-container p");
+      let index = 0;
+      let cycleInterval = setInterval(() => {
+        nameContainer.textContent = data[index].name;
+        index = (index + 1) % data.length;
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(cycleInterval);
+        nameContainer.textContent = chosenName;
+      }, 3000);
     }
   });
